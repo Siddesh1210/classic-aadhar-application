@@ -10,11 +10,9 @@ const userSchema=new mongoose.Schema({
         required:true,
         unique:true
     },
-    phone:{
+    aadharCard:{
         type:String,
         required:true,
-        maxLength:10,
-        unique:true
     },
     dob:{
         type:String,

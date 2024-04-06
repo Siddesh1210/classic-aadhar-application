@@ -14,9 +14,9 @@ dbConfig()
 app.use("/users", userRoute)
 
 app.get('/',(req,res)=>{
-    res.send('Hello World')
+    res.send('Checking Home Route')
 })
 
 app.listen(process.env.PORT || 5000,()=>{
-    console.log('Server is running on port 8000');
+    console.log('Server is running on port '+process.env.PORT||5000);
 })

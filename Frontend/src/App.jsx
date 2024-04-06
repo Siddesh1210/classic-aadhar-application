@@ -1,8 +1,9 @@
 import React from "react";
 import Navbar from "./components/Navbar";
-import UserInputForm from "./components/UserInputForm";
+import DisplayForm from "./components/DisplayForm";
 import { createBrowserRouter,Outlet } from "react-router-dom";
 import Login from "./components/Login";
+import AllUser from "./components/AllUser";
 
 const App = () => {
   return (
@@ -20,11 +21,15 @@ const appLayout = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <UserInputForm />,
+        element: <DisplayForm />,
       },
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/allusers",
+        element: <AllUser />,
       },
     ],
   },
