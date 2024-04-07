@@ -1,38 +1,25 @@
 import React from "react";
+import { Routes, Route} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import DisplayForm from "./components/DisplayForm";
-import { createBrowserRouter,Outlet } from "react-router-dom";
 import Login from "./components/Login";
 import AllUser from "./components/AllUser";
+import PrivateComponent from "./components/PrivateComponent";
 
 const App = () => {
   return (
     <>
       <Navbar />
-      <Outlet/>
+      <Routes>
+        
+        <Route element={<PrivateComponent />}>
+          <Route path="/allusers" element={<AllUser />} />
+        </Route>
+        <Route path="/" element={<DisplayForm />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
     </>
   );
 };
 
-const appLayout = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-    children: [
-      {
-        path: "/",
-        element: <DisplayForm />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/allusers",
-        element: <AllUser />,
-      },
-    ],
-  },
-]);
-
-export default appLayout;
+export default App;

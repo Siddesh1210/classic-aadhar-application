@@ -1,7 +1,22 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link,useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+    const [show,setShow]=useState(false);
+    const navigate=useNavigate();
+    useEffect(()=>{
+        const auth=localStorage.getItem('access_token');
+        if(auth)
+        {
+            setShow(true);
+        }
+    })
+
+    function logoutHandler()
+    {
+        localStorage.clear();
+        setShow(false);
+    }
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-body" data-bs-theme="dark">
@@ -27,10 +42,24 @@ const Navbar = () => {
                   Home
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link active" to="/login">
-                  Login
+              {
+                show?
+                <li className="nav-item">
+                <Link className="nav-link active" aria-current="page" to="/allusers">
+                  Requests
                 </Link>
+              </li>:null
+              }
+              <li className="nav-item">
+                {
+                    show?
+                    <Link className="nav-link active" to="/login" onClick={logoutHandler}>
+                      Logout
+                    </Link>:
+                    <Link className="nav-link active" to="/login">
+                      Login
+                    </Link>
+                }
               </li>
             </ul>
           </div>

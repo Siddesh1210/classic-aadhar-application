@@ -101,12 +101,30 @@ routes.post("/login", async (req, res) => {
       { expiresIn: "10d" }
     );
 
+    if (!accessToken) {
+      return res.status(400).json({
+        isOk: false,
+        message: "Access token not generated",
+      });
+    }
+
+    if (!refreshToken) {
+      return res.status(400).json({
+        isOk: false,
+        message: "Refresh token not generated",
+      });
+    }
+
+    res.cookie("access_token", accessToken, { httpOnly: true });
+    res.cookie("refresh_token", refreshToken, { httpOnly: true });
+
     res.status(200).json({
       isOk: true,
       message: "User logged in successfully",
       accessToken,
       refreshToken,
     });
+    
   } catch (error) {
     console.log(error);
     return res
@@ -119,7 +137,7 @@ routes.get("/allusers", async function (req, res) {
   try {
     const allusers = await User.find();
     if (allusers.length == 0) {
-      res.status(200).json({
+      return res.status(200).json({
         isOk: true,
         message: "No users found",
       });
@@ -129,7 +147,9 @@ routes.get("/allusers", async function (req, res) {
       .json({ isOk: true, users: allusers, message: "All users found" });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "Internal Server Error" });
+    return res
+      .status(500)
+      .json({ isOk: false, message: "Internal Server Error" });
   }
 });
 
@@ -183,7 +203,7 @@ routes.delete("/deleteuser/:id", async (req, res) => {
     // Return success response
     return res
       .status(200)
-      .json({ isOk: true, message: "User deleted and notification sent" });
+      .json({ isOk: true, message: "User deleted and email sent" });
   } catch (error) {
     console.error("Error deleting user:", error);
     // If an error occurs, send an internal server error response

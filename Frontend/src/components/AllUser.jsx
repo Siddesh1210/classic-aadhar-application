@@ -75,140 +75,131 @@ const AllUser = () => {
   };
 
   const approveHandler = async (user) => {
-    alert("Approve begin")
-    const response=await useFetchData(
+    const response = await useFetchData(
       `http://localhost:8000/users/deleteuser/${user._id}`,
-      "DELETE",
-      {
-        email: user.email,
-        name: user.name,
-      }
+      "DELETE"
     );
-    if(response.isOk)
-    {
-        const response = await useFetchData(
-            "http://localhost:8000/users/allusers",
-            "GET"
-          );
-        if (response.isOk) {
-          setUsers(response.users);
-        }
+    if (response.isOk) {
+      const response = await useFetchData(
+        "http://localhost:8000/users/allusers",
+        "GET"
+      );
+      if (response.isOk) {
+        setUsers(response.users);
+      }
     }
-  };
+  }
 
   return (
-    <div className="container-fluid bg-light">
-      <div className="row justify-content-center">
-        <div className="col-md-12">
-          <table className="table table-success table-striped">
-            <thead>
-              <tr>
-                <th scope="col">Sr.No</th>
-                <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Aadhar Card</th>
-                <th scope="col">Date of Birth</th>
-                <th scope="col">Address</th>
-                <th scope="col">Action</th>
-                <th scope="col">Approve</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users?.map((user, index) => (
-                <tr key={user._id}>
-                  <th scope="row">{index + 1}</th>
-                  <td>
-                    {editingUserId === user._id ? (
-                      <input
-                        type="text"
-                        name="name"
-                        value={userData.name}
-                        onChange={handleInputChange}
-                      />
-                    ) : (
-                      user.name
-                    )}
-                  </td>
-                  <td>
-                    {editingUserId === user._id ? (
-                      <input
-                        type="email"
-                        name="email"
-                        value={userData.email}
-                        onChange={handleInputChange}
-                      />
-                    ) : (
-                      user.email
-                    )}
-                  </td>
+    <>
+      <table className="table table-hover table-success table-striped">
+        <thead>
+          <tr className="table-dark table-active text-white">
+            <th scope="col">Sr.No</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Aadhar Card</th>
+            <th scope="col">Date of Birth</th>
+            <th scope="col">Address</th>
+            <th scope="col">Action</th>
+            <th scope="col">Approve</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users?.map((user, index) => (
+            <tr key={user._id}>
+              <th scope="row">{index + 1}</th>
+              <td>
+                {editingUserId === user._id ? (
+                  <input
+                    type="text"
+                    name="name"
+                    value={userData.name}
+                    onChange={handleInputChange}
+                  />
+                ) : (
+                  user.name
+                )}
+              </td>
+              <td>
+                {editingUserId === user._id ? (
+                  <input
+                    type="email"
+                    name="email"
+                    value={userData.email}
+                    onChange={handleInputChange}
+                  />
+                ) : (
+                  user.email
+                )}
+              </td>
 
-                  <td>
-                    {editingUserId === user._id ? (
-                      <input
-                        type="text"
-                        name="aadharCard"
-                        value={userData.aadharCard}
-                        onChange={handleInputChange}
-                      />
-                    ) : (
-                      user.aadharCard
-                    )}
-                  </td>
-                  <td>
-                    {editingUserId === user._id ? (
-                      <input
-                        type="date"
-                        name="dob"
-                        value={userData.dob}
-                        onChange={handleInputChange}
-                      />
-                    ) : (
-                      user.dob
-                    )}
-                  </td>
-                  <td>
-                    {editingUserId === user._id ? (
-                      <input
-                        type="text"
-                        name="address"
-                        value={userData.address}
-                        onChange={handleInputChange}
-                      />
-                    ) : (
-                      user.address
-                    )}
-                  </td>
-                  <td>
-                    {editingUserId === user._id ? (
-                      <button className="user-btn" onClick={handleUpdate}>
-                        Update
-                      </button>
-                    ) : (
-                      <button
-                        className="user-btn"
-                        onClick={() => startEditing(user._id, user)}
-                      >
-                        Edit
-                      </button>
-                    )}
-                  </td>
-                  <td>
-                    <button
-                      className="user-btn"
-                      onClick={() => {
-                        approveHandler(user);
-                      }}
-                    >
-                      Approve
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+              <td>
+                {editingUserId === user._id ? (
+                  <input
+                    type="text"
+                    name="aadharCard"
+                    value={userData.aadharCard}
+                    onChange={handleInputChange}
+                  />
+                ) : (
+                  user.aadharCard
+                )}
+              </td>
+              <td>
+                {editingUserId === user._id ? (
+                  <input
+                    type="date"
+                    name="dob"
+                    value={userData.dob}
+                    onChange={handleInputChange}
+                  />
+                ) : (
+                  user.dob
+                )}
+              </td>
+              <td>
+                {editingUserId === user._id ? (
+                  <input
+                    type="text"
+                    name="address"
+                    value={userData.address}
+                    onChange={handleInputChange}
+                  />
+                ) : (
+                  user.address
+                )}
+              </td>
+              <td>
+                {editingUserId === user._id ? (
+                  <button className="user-btn" onClick={handleUpdate}>
+                    Update
+                  </button>
+                ) : (
+                  <button
+                    className="user-btn"
+                    onClick={() => startEditing(user._id, user)}
+                  >
+                    Edit
+                  </button>
+                )}
+              </td>
+              <td>
+                <button
+                  className="user-btn"
+                  onClick={() => {
+                    approveHandler(user);
+                  }}
+                >
+                  Approve
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {users==null || users?.length==0?<p className="fs-5 text-center" style={{letterSpacing:"1px"}}>No more request left for approval</p>:null}
+    </>
   );
 };
 

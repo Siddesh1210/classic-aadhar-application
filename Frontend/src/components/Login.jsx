@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "../assets/css/UserInputForm.css";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -43,12 +45,24 @@ const Login = () => {
         },
         body: JSON.stringify(userData),
       });
+
       const result = await response.json();
+
+      console.log(result);
+
       setDisplayText(result.message);
-    //   alert(result.message);
-      if (result.isOk) setDisplayTopError(true);
-      else setDisplayTopError(false);
-    //   console.log(result);
+
+      if (result.isOk) {
+        setDisplayTopError(true);
+        localStorage.setItem(
+          "access_token",
+          JSON.stringify(result.accessToken)
+        );
+
+        setTimeout(() => {
+          navigate("/allusers");
+        }, 2000);
+      } else setDisplayTopError(false);
     }
   }
 
@@ -64,7 +78,11 @@ const Login = () => {
             <h5 className="text-center fw-bold welcome-text fs-4">
               Welcome Back
             </h5>
-            <p className={`text-center fs-5 ${displayTopError?`text-success`:`text-danger`}`}>
+            <p
+              className={`text-center fs-5 ${
+                displayTopError ? `text-success` : `text-danger`
+              }`}
+            >
               {displayText}
             </p>
             <div className="flex-column">
