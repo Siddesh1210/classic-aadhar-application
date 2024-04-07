@@ -47,7 +47,7 @@ const UserForm = ({ openForm }) => {
     }
 
     if (Object.keys(errors).length === 0) {
-      const response = await fetch("http://localhost:8000/users/register", {
+      const response = await fetch("https://classic-aadhar-application.onrender.com/users/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

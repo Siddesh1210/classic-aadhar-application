@@ -38,7 +38,7 @@ const Login = () => {
 
     // if No errors and error object is empty, proceed with login logic
     if (Object.keys(errors).length === 0) {
-      const response = await fetch("http://localhost:8000/users/login", {
+      const response = await fetch("https://classic-aadhar-application.onrender.com/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -22,7 +22,7 @@ const AllUser = () => {
   const fetchUsers = async () => {
     try {
       const response = await useFetchData(
-        "http://localhost:8000/users/allusers",
+        "https://classic-aadhar-application.onrender.com/users/allusers",
         "GET"
       );
 
@@ -59,7 +59,7 @@ const AllUser = () => {
   const handleUpdate = async () => {
     try {
       const result = await useFetchData(
-        `http://localhost:8000/users/updateuser/${editingUserId}`,
+        `https://classic-aadhar-application.onrender.com/users/updateuser/${editingUserId}`,
         "PUT",
         userData
       );
@@ -76,12 +76,12 @@ const AllUser = () => {
 
   const approveHandler = async (user) => {
     const response = await useFetchData(
-      `http://localhost:8000/users/deleteuser/${user._id}`,
+      `https://classic-aadhar-application.onrender.com/users/deleteuser/${user._id}`,
       "DELETE"
     );
     if (response.isOk) {
       const response = await useFetchData(
-        "http://localhost:8000/users/allusers",
+        "https://classic-aadhar-application.onrender.com/users/allusers",
         "GET"
       );
       if (response.isOk) {
