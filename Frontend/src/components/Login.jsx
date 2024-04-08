@@ -51,7 +51,7 @@ const Login = () => {
       const result = await response.json();
 
       console.log(result);
-
+        setLoginText("Login")
       setDisplayText(result.message);
 
       if (result.isOk) {
