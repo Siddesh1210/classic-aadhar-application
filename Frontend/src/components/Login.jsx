@@ -3,6 +3,7 @@ import "../assets/css/UserInputForm.css";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const [loginText,setLoginText]=useState("Login")
   const navigate = useNavigate();
   const [userData, setUserData] = useState({
     email: "",
@@ -38,6 +39,7 @@ const Login = () => {
 
     // if No errors and error object is empty, proceed with login logic
     if (Object.keys(errors).length === 0) {
+        setLoginText("Logging...")
       const response = await fetch("https://classic-aadhar-application.onrender.com/users/login", {
         method: "POST",
         headers: {
@@ -53,6 +55,7 @@ const Login = () => {
       setDisplayText(result.message);
 
       if (result.isOk) {
+        setLoginText("Logged In")
         setDisplayTopError(true);
         localStorage.setItem(
           "access_token",
@@ -60,6 +63,7 @@ const Login = () => {
         );
 
         setTimeout(() => {
+        setLoginText("Login")
           navigate("/allusers");
         }, 2000);
       } else setDisplayTopError(false);
@@ -128,7 +132,7 @@ const Login = () => {
             ) : null}
 
             <button className="button-submit" onClick={loginHandler}>
-              Log in
+              {loginText}
             </button>
           </form>
         </div>
